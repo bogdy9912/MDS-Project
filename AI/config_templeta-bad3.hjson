@@ -1,0 +1,34 @@
+# Am folosit HJSON pentru comentarii
+{
+    "Input" : {
+        "shape" : 8,
+        # False if your data doesn't need flattening
+        "flatten" : true
+    },
+
+    "Layers" : [
+        {   
+            # type as in dense, conv2d
+            "type": "dense",
+            "neurons" : 100,
+            # activation can be a function name supported by tensorflow.keras
+            "activation" : "relu"
+        }
+    ],
+
+    "Optimize" : {
+        # name can be any SGD optimizer supported by temsorflow.kers
+        "name" : "Adam",
+        "learning_rate" : 0.001
+    },
+
+    "Loss_function" : {
+        # same as with activatian and name
+        "name" : "binary_crossentropy"
+    },
+
+    "Metrics" : {
+        # here you can add more metrics if you like
+        "metric1" : "accuracy"
+    }
+}
