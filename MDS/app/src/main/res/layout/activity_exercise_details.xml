@@ -7,25 +7,20 @@
     tools:context=".ExerciseDetails">
 
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/details_toolbar" />
-
-
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/imageExercise"
-        android:layout_width="305dp"
-        android:layout_height="148dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:contentDescription="PozaExercitiu"
-        android:scaleType="centerCrop"
-
+    <Button
+        android:id="@+id/recordVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/recordVideo"
+        android:textAlignment="center"
+        android:layout_marginEnd="0dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/textCreateBy"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.411"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include"
-        app:riv_corner_radius="6dp" />
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar"
+        app:layout_constraintVertical_bias="0.0" />
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -39,34 +34,6 @@
         android:theme="@style/RatingBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageExercise" />
-
-    <TextView
-        android:id="@+id/textCreateBy"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ellipsize="end"
-        android:textColor="#ffffff"
-        android:maxLines="1"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ratingBar" />
-
-
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Difficulty"
-        android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/ratingBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="#ffffff"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageExercise" />
 
@@ -88,7 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:textColor="#ffffff"
+            android:padding="32dp"
+            android:textColor="#FF0000"
             android:textSize="12sp"
 
             app:layout_constraintEnd_toEndOf="parent"
@@ -98,6 +66,52 @@
 
 
     </ScrollView>
+
+    <TextView
+        android:id="@+id/textCreateBy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="#FF0000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ratingBar" />
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Difficulty"
+        android:textColor="#FF0000"
+        app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageExercise" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/imageExercise"
+        android:layout_width="305dp"
+        android:layout_height="148dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="PozaExercitiu"
+        android:scaleType="centerCrop"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.411"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:riv_corner_radius="6dp" />
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/details_toolbar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -81,7 +81,7 @@ public class ProgressFragment extends Fragment  implements ExercisesListner,Exer
                                 if(document.getData().toString().contains(uid)){
                                     favouriteExercices[0]=document.getString("favourites");
                                     final String[] favouriteExercicesVector = favouriteExercices[0].split(",");
-                                Log.d(TAG, "caca"+ favouriteExercicesVector[1]);
+                                Log.d(TAG, "mesaj"+ favouriteExercicesVector[1]);
 
 
 
