@@ -145,13 +145,15 @@ def function():
 
     if request.method == 'GET':
         
+        """
         if "video" in request.files:
             video = request.files["video"]
             filename = secure_filename(file.filename) # Secure the filename to prevent some kind of attack
             media.save(video, name=filename)
+        """
 
         # Fragment the video into frames
-        fragment_video('D:\College\coding (Python)\OpenPose - Biceps Curl\\videos\\2.mp4', 'D:\College\coding (Python)\OpenPose - Biceps Curl\\frames', 250)
+        fragment_video('videos\\1.mp4', 'frames', 250)
 
         # Read the frames
         input_data = read_frames('frames')
@@ -172,7 +174,9 @@ def function():
             if o == 1:
                 good += 1
 
-    return str(good / len(output))
+        score = good / len(output) * 100
+
+    return f'Biceps curl: {round(score, 2)}% correct'
 
 if __name__ == '__main__':
     app.run(debug=True)
