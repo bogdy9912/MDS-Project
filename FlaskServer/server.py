@@ -1,11 +1,21 @@
+import base64
+
+import flask
 from flask import Flask, request
 import tensorflow as tf
 import cv2
 import os
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
+from flask_socketio import SocketIO
+
+from werkzeug.utils import secure_filename
+
+
+# media = UploadSet('media', ('mp4')) # Create an upload set that only allow mp4 file
 
 app = Flask(__name__)
+socketio = SocketIO(app)
 
 net = cv2.dnn.readNetFromTensorflow('graph_opt.pb')
 model = tf.keras.models.load_model('saved_models\openpose_bicepscurl_nobg_sigmoid')
@@ -22,7 +32,7 @@ def get_openpose_data(frame, thr=0.2):
     
     Arguments:
         frame {list} -- The image that the openpose model is run over.
-    
+
     Returns:
         list -- A list that consists of coordinates of the keypoints.
     """
@@ -70,6 +80,7 @@ def process_openpose_data(data, scaler, fit=True):
     
     x_data = np.array(x_data).astype(float)
     # Reshape so we can fit the scaler on our data.
+    print(x_data.size)
     x_data = x_data.reshape(x_data.shape[0], x_data.shape[1] * 2)
     
     # Normalize the data
@@ -142,18 +153,42 @@ def delete_frames(location):
 
 @app.route('/', methods=['POST', 'GET'])
 def function():
+    return 'HOME'
 
-    if request.method == 'GET':
-        
-        """
-        if "video" in request.files:
-            video = request.files["video"]
-            filename = secure_filename(file.filename) # Secure the filename to prevent some kind of attack
-            media.save(video, name=filename)
-        """
 
+
+
+@app.route('/upload2', methods=['POST', 'GET'])
+def upload_encoded():
+
+    if "video" in request.form:
+        return "e none"
+    else:
+        return 'merge cica'
+    if request.method == 'POST':
+        print('DAMN')
+        return 'a venit'
+
+
+@app.route('/upload', methods=['POST', 'GET'])
+def upload():
+    if request.method == 'POST':
+
+        # if "video" in request.files:
+        if "video" in request.form:
+            # video = request.files["video"]
+            video = request.form.get("video")
+            fh = open("video.mp4", "wb")
+            fh.write(base64.b64decode(video))
+            fh.close()
+            # filename = secure_filename(video.filename) # Secure the filename to prevent some kind of attack
+            # name = os.path.join('videos', 'video.mp4')
+            name = "video.mp4"
+            # fh.save(name)
+        else:
+            return "Nu am primit"
         # Fragment the video into frames
-        fragment_video('videos\\1.mp4', 'frames', 250)
+        fragment_video(name, 'frames', 250)
 
         # Read the frames
         input_data = read_frames('frames')
@@ -175,8 +210,11 @@ def function():
                 good += 1
 
         score = good / len(output) * 100
-
-    return f'Biceps curl: {round(score, 2)}% correct'
+        print('pas7')
+        print('score: ' + str(score))
+        # return f'{round(score, 2)}'
+        return str(score)
+        
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")

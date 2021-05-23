@@ -11,15 +11,27 @@
         android:id="@+id/recordVideo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/recordVideo"
-        android:textAlignment="center"
-        android:layout_marginEnd="0dp"
+        android:layout_marginTop="4dp"
         android:gravity="center_horizontal"
+        android:text="@string/recordVideo"
+
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+
+    <Button
+        android:id="@+id/pickVideoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/pickVideoButton"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/textCreateBy"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar"
+        app:layout_constraintTop_toBottomOf="@+id/recordVideo"
         app:layout_constraintVertical_bias="0.0" />
 
     <RatingBar
@@ -27,7 +39,7 @@
         style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="50dp"
         android:isIndicator="true"
 
         android:numStars="5"
