@@ -1,11 +1,14 @@
 package com.example.mds;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,8 +51,12 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+
+
+
 public class ExerciseDetails extends AppCompatActivity {
 
+    Dialog dialog;
     RoundedImageView imgExercise;
     ImageView backArrow;
     TextView textName, textCreateBy, textStory;
@@ -70,6 +77,7 @@ public class ExerciseDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dialog = new Dialog(ExerciseDetails.this);
         ExerciseDetails.context = getApplicationContext();
         setContentView(R.layout.activity_exercise_details);
 
@@ -269,9 +277,8 @@ public class ExerciseDetails extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.i("TAG", response);
-                AlertDialog.Builder builder = new AlertDialog.Builder(ExerciseDetails.context);
-                builder.setTitle(response);
 
+                openDialog(response);
 
 //                Dupa ce mesajul a fost postat se trimite inapoi catre Feed cu tokenul JWT
 //                Intent intent = new Intent(PostMessage.this, Feed.class);
@@ -315,6 +322,29 @@ public class ExerciseDetails extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
 
+    }
+
+    private void openDialog(String response) {
+        dialog.setContentView(R.layout.dialog_layout);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView imageviewColse = dialog.findViewById(R.id.imageViewClose);
+        TextView textView = dialog.findViewById(R.id.textView5);
+        textView.setText("Congrats, \nyou got: " + response);
+        dialog.show();
+        Button buttonClose = dialog.findViewById(R.id.button6);
+        imageviewColse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        buttonClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
     public String getRealPathFromURI(Uri contentUri) {
