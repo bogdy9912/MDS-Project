@@ -1,14 +1,22 @@
 import unittest
+from typing import List
 
-def check_requirements(module_name):
+
+def check_requirements(module_name) -> object:
+    """
+
+    Args:
+        module_name (String):
+    """
     f = open("requiremets.txt", "r")
     file = f.read()
-    package= file.split('\n')
+    package: List[str] = file.split('\n')
     for p in package:
-        package_name = p.split('==')[0]
-        if (package_name == module_name):
+        package_name: str = p.split('==')[0]
+        if package_name == module_name:
             return True
     return False
+
 
 class MyTestCase(unittest.TestCase):
     def test_requiremts(self):

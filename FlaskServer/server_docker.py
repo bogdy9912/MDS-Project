@@ -1,6 +1,5 @@
 import base64
 
-import flask
 from flask import Flask, request
 import tensorflow as tf
 import cv2
@@ -8,11 +7,6 @@ import os
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from flask_socketio import SocketIO
-
-from werkzeug.utils import secure_filename
-
-
-# media = UploadSet('media', ('mp4')) # Create an upload set that only allow mp4 file
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -22,10 +16,11 @@ model = tf.keras.models.load_model('MDS-Project/FlaskServer/saved_models/openpos
 
 scaler = MinMaxScaler()
 IMG_SIZE = 256
-BODY_PARTS = { "Nose": 0, "Neck": 1, "RShoulder": 2, "RElbow": 3, "RWrist": 4,
-               "LShoulder": 5, "LElbow": 6, "LWrist": 7, "RHip": 8, "RKnee": 9,
-               "RAnkle": 10, "LHip": 11, "LKnee": 12, "LAnkle": 13, "REye": 14,
-               "LEye": 15, "REar": 16, "LEar": 17, "Background": 18 }
+BODY_PARTS = {"Nose": 0, "Neck": 1, "RShoulder": 2, "RElbow": 3, "RWrist": 4,
+              "LShoulder": 5, "LElbow": 6, "LWrist": 7, "RHip": 8, "RKnee": 9,
+              "RAnkle": 10, "LHip": 11, "LKnee": 12, "LAnkle": 13, "REye": 14,
+              "LEye": 15, "REar": 16, "LEar": 17, "Background": 18}
+
 
 def get_openpose_data(frame, thr=0.2):
     """Function to run the openpose model over an image and get the coordinates for all 19 keypoints.
@@ -38,12 +33,13 @@ def get_openpose_data(frame, thr=0.2):
     """
     frameWidth = frame.shape[1]
     frameHeight = frame.shape[0]
-    
-    net.setInput(cv2.dnn.blobFromImage(frame, 1.0, (IMG_SIZE, IMG_SIZE), (127.5, 127.5, 127.5), swapRB=True, crop=False))
+
+    net.setInput(
+        cv2.dnn.blobFromImage(frame, 1.0, (IMG_SIZE, IMG_SIZE), (127.5, 127.5, 127.5), swapRB=True, crop=False))
     out = net.forward()
     out = out[:, :19, :, :]
 
-    assert(len(BODY_PARTS) == out.shape[1])
+    assert (len(BODY_PARTS) == out.shape[1])
 
     points = []
     for i in range(len(BODY_PARTS)):
@@ -58,7 +54,7 @@ def get_openpose_data(frame, thr=0.2):
     return points
 
 
-def process_openpose_data(data, scaler, fit=True):
+def process_openpose_data(data, scalerParam, fit=True):
     """Functions that is processing the data output of openpose.
 
     Arguments:
@@ -74,19 +70,19 @@ def process_openpose_data(data, scaler, fit=True):
     for image in data:
         openpose_data = get_openpose_data(image)
         for idx, coords in enumerate(openpose_data):
-            if coords == None:
+            if coords is None:
                 openpose_data[idx] = [0, 0]
         x_data.append(openpose_data[1:5])
-    
+
     x_data = np.array(x_data).astype(float)
     # Reshape so we can fit the scaler on our data.
     print(x_data.size)
     x_data = x_data.reshape(x_data.shape[0], x_data.shape[1] * 2)
-    
+
     # Normalize the data
-    if fit == True:
-        scaler.fit(x_data)
-    x_data = scaler.transform(x_data)
+    if fit:
+        scalerParam.fit(x_data)
+    x_data = scalerParam.transform(x_data)
     return x_data
 
 
@@ -156,37 +152,28 @@ def function():
     return 'HOME'
 
 
-
-
 @app.route('/upload2', methods=['POST', 'GET'])
 def upload_encoded():
-
     if "video" in request.form:
         return "e none"
     else:
-        return 'merge cica'
-    if request.method == 'POST':
-        print('DAMN')
-        return 'a venit'
+        return 'merge'
 
 
 @app.route('/upload', methods=['POST', 'GET'])
 def upload():
     if request.method == 'POST':
 
-        # if "video" in request.files:
         if "video" in request.form:
-            # video = request.files["video"]
+
             video = request.form.get("video")
             fh = open("video.mp4", "wb")
             fh.write(base64.b64decode(video))
             fh.close()
-            # filename = secure_filename(video.filename) # Secure the filename to prevent some kind of attack
-            # name = os.path.join('videos', 'video.mp4')
             name = "video.mp4"
-            # fh.save(name)
         else:
             return "Nu am primit"
+
         # Fragment the video into frames
         fragment_video(name, 'frames', 250)
 
@@ -214,7 +201,7 @@ def upload():
         print('score: ' + str(score))
         # return f'{round(score, 2)}'
         return str(score)
-        
+
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")
