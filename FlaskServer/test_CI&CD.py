@@ -8,7 +8,7 @@ def check_requirements(module_name) -> object:
     Args:
         module_name (String):
     """
-    f = open("requiremets.txt", "r")
+    f = open("requirements.txt", "r")
     file = f.read()
     package: List[str] = file.split('\n')
     for p in package:
