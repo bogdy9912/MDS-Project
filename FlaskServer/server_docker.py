@@ -89,7 +89,6 @@ def process_openpose_data(data, scalerParam, fit=True):
 def fragment_video(video_name, save_location, interval):
     """Function to fragment video into frames at a given interval of time
         and saves the in a given directory.
-
     Arguments:
         video_name {string} -- Path to the video.
         save_location {string} -- Path to the save location.
