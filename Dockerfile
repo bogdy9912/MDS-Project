@@ -1,6 +1,6 @@
 # --------- How to build and run --------- #
 #  docker build -t flask_server:0.1 .      #
-#  docker run -p 80:80 flask_server:0.1    #
+#  docker run -p 5000:5000 flask_server:0.1    #
 # ---------------------------------------- #
 
 FROM ubuntu:18.04
