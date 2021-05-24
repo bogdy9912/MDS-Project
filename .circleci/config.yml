@@ -23,4 +23,4 @@ jobs:
           command: |
             . venv/bin/activate
             flake8 --max-line-length 120 --statistics ./FlaskServer
-            pytest -v --cov=calculator ./FlaskServer
+            pytest -v ./FlaskServer
