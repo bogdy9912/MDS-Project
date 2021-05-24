@@ -24,7 +24,6 @@ BODY_PARTS = {"Nose": 0, "Neck": 1, "RShoulder": 2, "RElbow": 3, "RWrist": 4,
 
 def get_openpose_data(frame, thr=0.2):
     """Function to run the openpose model over an image and get the coordinates for all 19 keypoints.
-    
     Arguments:
         frame {list} -- The image that the openpose model is run over.
 
